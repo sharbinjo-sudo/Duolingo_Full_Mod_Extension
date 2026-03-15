@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Duolingo Max + Autolingo</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      width: 280px;
+      font-family: Arial, sans-serif;
+      background-color: #181a1b;
+      color: #fff;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+    @media (prefers-color-scheme: light) {
+      body { background-color: #f5f6fa; color: #181a1b; }
+      .tab-bar { background: #e0e3ed; }
+      .tab-btn { color: #444; }
+      .tab-btn.active { background: #f5f6fa; color: #181a1b; }
+      .panel { background: #f5f6fa; }
+    }
+
+    /* Tab bar */
+    .tab-bar {
+      display: flex;
+      background: #111315;
+    }
+    .tab-btn {
+      flex: 1;
+      padding: 10px 6px;
+      border: none;
+      background: transparent;
+      color: #aaa;
+      font-size: 12px;
+      font-weight: bold;
+      cursor: pointer;
+      border-bottom: 3px solid transparent;
+      transition: all 0.2s;
+    }
+    .tab-btn.active {
+      color: #58cc02;
+      border-bottom: 3px solid #58cc02;
+      background: #181a1b;
+    }
+    .tab-btn:hover:not(.active) { background: #222; color: #fff; }
+
+    .panel { display: none; padding: 12px; }
+    .panel.active { display: block; }
+
+    /* ---- MAX panel ---- */
+    #status {
+      font-size: 13px;
+      font-weight: bold;
+      margin-bottom: 6px;
+      text-align: center;
+    }
+    #moneySaved {
+      font-size: 13px;
+      font-weight: bold;
+      color: #66bb6a;
+      text-align: center;
+      margin-bottom: 10px;
+    }
+    .btn-row { margin: 6px 0; text-align: center; }
+    .btn-row a {
+      display: inline-block;
+      padding: 8px 14px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: bold;
+      text-decoration: none;
+      color: #fff;
+    }
+    .btn-github { background: #ff7c00; }
+    .btn-github:hover { background: #e06600; }
+    .btn-issue  { background: #e53935; }
+    .btn-issue:hover  { background: #b71c1c; }
+    .btn-options { background: #3d46b5; }
+    .btn-options:hover { background: #2c3187; }
+    .btn-row img { border-radius: 8px; max-width: 100%; }
+
+    /* ---- AUTOLINGO panel ---- */
+    .topbar {
+      display: flex;
+      align-items: center;
+      padding: 8px 10px;
+      background: #1a3a1a;
+      border-radius: 8px;
+      margin-bottom: 10px;
+    }
+    .topbar img { width: 28px; height: 28px; margin-right: 8px; }
+    .topbar-text { font-size: 15px; font-weight: bold; color: #58cc02; }
+
+    .content-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 8px;
+    }
+    .autolingo-switch { position: relative; display: inline-block; width: 46px; height: 24px; }
+    .autolingo-switch input { opacity: 0; width: 0; height: 0; }
+    .autolingo-slider {
+      position: absolute; cursor: pointer;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: #555; border-radius: 24px;
+      transition: 0.3s;
+    }
+    .autolingo-slider:before {
+      position: absolute; content: "";
+      height: 18px; width: 18px;
+      left: 3px; bottom: 3px;
+      background: white; border-radius: 50%;
+      transition: 0.3s;
+    }
+    input:checked + .autolingo-slider { background: #58cc02; }
+    input:checked + .autolingo-slider:before { transform: translateX(22px); }
+
+    .delay-container label { font-size: 13px; }
+    #delay-input {
+      width: 70px; padding: 4px 6px;
+      border-radius: 6px; border: 1px solid #555;
+      background: #2a2c2e; color: #fff;
+      font-size: 13px;
+    }
+    @media (prefers-color-scheme: light) {
+      #delay-input { background: #fff; color: #181a1b; border-color: #aaa; }
+    }
+
+    .row-button {
+      width: 100%;
+      padding: 8px;
+      border-radius: 8px;
+      border: none;
+      background: #58cc02;
+      color: #fff;
+      font-size: 13px;
+      font-weight: bold;
+      cursor: pointer;
+      margin-bottom: 4px;
+    }
+    .row-button:hover { background: #46a302; }
+  </style>
+</head>
+<body>
+  <div class="tab-bar">
+    <button class="tab-btn active" id="tab-max">🏆 Max Features</button>
+    <button class="tab-btn" id="tab-autolingo">⚡ Autolingo</button>
+  </div>
+
+  <!-- MAX PANEL -->
+  <div id="panel-max" class="panel active">
+    <h1 id="status">Version: Checking...</h1>
+    <div id="moneySaved"></div>
+    <div class="btn-row">
+      <a href="https://html-preview.github.io/?url=https://raw.githubusercontent.com/apersongithub/Duolingo-Unlimited-Hearts/refs/heads/main/extras/donations.html" target="_blank">
+        <img src="images/donate.png" alt="Donate" style="height:50px;">
+      </a>
+    </div>
+    <div class="btn-row"><a class="btn-github" href="https://github.com/apersongithub/Duolingo-Unlimited-Hearts" target="_blank">View on GitHub</a></div>
+    <div class="btn-row"><a class="btn-issue" href="https://github.com/apersongithub/Duolingo-Unlimited-Hearts/issues" target="_blank">Report an Issue</a></div>
+    <div class="btn-row"><a class="btn-options" href="options.html" target="_blank">⚙️ Options</a></div>
+  </div>
+
+  <!-- AUTOLINGO PANEL -->
+  <div id="panel-autolingo" class="panel">
+    <div class="topbar">
+      <img src="images/diamond-league.png">
+      <div class="topbar-text">Autolingo</div>
+    </div>
+    <div id="autolingo-content"></div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
